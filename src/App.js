@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import MainContent from './components/MainContent';
+import Footer from './components/Footer';
+import Dashboard from './components/Dashboard';
+import DataExplorer from './components/DataExplorer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const [selectedItem, setSelectedItem] = useState('Dashboard');
+    const sidebarItems = ['Dashboard', 'Data Explorer', 'Settings'];
+
+    const renderContent = () => {
+        switch (selectedItem) {
+            case 'Dashboard':
+                return <Dashboard />;
+            case 'Data Explorer':
+                return <DataExplorer />;
+            case 'Settings':
+                return <div>Settings</div>;
+            default:
+                return <Dashboard />;
+        }
+    };
+
+    return (
+        <div>
+            <Header />
+            <Sidebar items={sidebarItems} onItemSelect={setSelectedItem} />
+            <MainContent>
+                {renderContent()}
+            </MainContent>
+            <Footer />
+        </div>
+    );
+};
 
 export default App;
